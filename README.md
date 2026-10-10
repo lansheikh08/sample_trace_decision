@@ -47,3 +47,10 @@ that decision and only hand it the trace id once the decision is made.
   decision threshold is the first 8 bytes interpreted as a big-endian unsigned
   64-bit integer divided by `2**64`, giving a value in `[0.0, 1.0)`. A trace is
   kept when `threshold < rate`.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
